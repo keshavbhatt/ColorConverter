@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>com.ktechpit.colorwall</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>MIT</project_license>
+	<name>ColorWall</name>
+	<summary>Desktop wallpaper store and manager utility</summary>
+	<developer_name>Keshav Bhatt</developer_name>
+	<description>
+		<p>ColorWall is a desktop wallpaper store/manager utility that allows you to browse download and apply wallpaper from huge collection of wallpapers.</p>
+		<p>Key features of Whatsie:</p>
+		<ul>
+		   <li>Light and Dark Themes with automatic switching</li>
+		   <li>Customized Notifications &amp; Native Notifications</li>
+		   <li>Global App shortcuts</li>
+		   <li>BuiltIn download manager</li>
+		   <li>Mute Audio, Disable Notifications</li>
+		   <li>App Lock feature</li>
+		   <li>Built in Spell Checker (with support for 31 Major languages)</li>
+		</ul>
+		<p>Other settings that let you control every aspect of WebApp like:</p>
+		<ul>
+		   <li>Do not disturb mode</li>
+		   <li>Full view mode, lets you expand the main view to the full width of the window</li>
+		   <li>Ability to switch between Native &amp; Custom notification</li>
+		   <li>Configurable notification popup timeout</li>
+		   <li>Mute all audio from Whatapp</li>
+		   <li>Minimize to tray on application start</li>
+		   <li>Enable disable app lock on application start</li>
+		   <li>Auto-locking after a certain interval of time</li>
+		</ul>
+	</description>
+	<launchable type="desktop-id">com.ktechpit.colorwall.desktop</launchable>
+	<url type="homepage">https://github.com/keshavbhatt/colorwall-web</url>
+	<url type="bugtracker">https://github.com/keshavbhatt/colorwall-web/issues</url>
+	<url type="donation">https://www.paypal.me/keshavnrj</url>
+	<keywords>
+		<keyword translate="no">ColorWall</keyword>
+		<keyword>social</keyword>
+		<keyword>social-media</keyword>
+		<keyword>messaging</keyword>
+	</keywords>
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/keshavbhatt/colorwall-web/main/screenshots/1.jpg</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/keshavbhatt/colorwall-web/main/screenshots/2.jpg</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/keshavbhatt/colorwall-web/main/screenshots/3.jpg</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/keshavbhatt/colorwall-web/main/screenshots/4.jpg</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/keshavbhatt/colorwall-web/main/screenshots/5.jpg</image>
+		</screenshot>
+	</screenshots>
+	<provides>
+		<binary>colorwall</binary>
+	</provides>
+	<content_rating type="oars-1.0" />
+	<releases>
+		<release version="1.0" date="2022-09-14" />
+	</releases>
+</component>

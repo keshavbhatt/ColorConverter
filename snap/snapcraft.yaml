@@ -1,5 +1,5 @@
 name: colorpie
-version: '1' 
+version: '1.1' 
 summary: Color Picker and Converter 
 description: |
   ColorPie is professional color management utility written in Qt.
@@ -7,11 +7,23 @@ description: |
 grade: stable  
 confinement: strict
 icon: snap/gui/icon.png
-base: core18
+base: core20
+compression: lzo
 
 architectures:
   - build-on: amd64
-    run-on: amd64  
+    run-on: amd64
+    
+environment:
+  SNAP_DESKTOP_RUNTIME: $SNAP/qt515-core20
+  
+package-repositories:
+  - type: apt
+    formats: [deb]
+    components: [main]
+    suites: [focal]
+    key-id: C65D51784EDC19A871DBDBB710C56D0DE9977759
+    url: https://ppa.launchpadcontent.net/beineri/opt-qt-5.15.4-focal/ubuntu
 
 apps:
   colorpie:
@@ -27,10 +39,8 @@ apps:
         - gsettings
         - home
         - opengl
-        - removable-media
         - unity7
         - x11
-        - mount-observe
         - network
         - network-control
         - network-observe
@@ -49,18 +59,53 @@ plugs:
     interface: content
     target: $SNAP/data-dir/sounds
     default-provider: gtk-common-themes
-  qt513:
+  qt515-core20:
     interface: content
-    target: $SNAP/qt513
-    default-provider: qt513
+    target: $SNAP/qt515-core20
+    default-provider: qt515-core20
 
 parts:
-  snap-launcher:
-     plugin: dump
-     source: snap_launcher/
+  build-src:
+     plugin: nil
+     source: .
+     source-subdir: src/
      override-build: |
             snapcraftctl build
-            sed -i 's|Icon=.*|Icon=${SNAP}/meta/gui/icon.png|g' ${SNAPCRAFT_PART_SRC}/colorpie.desktop
             
+            sed -i 's|Icon=.*|Icon=${SNAP}/meta/gui/icon.png|g' ${SNAPCRAFT_PART_SRC}/colorpie.desktop
+
+            apt install -y build-essential qt515base qt515svg qt515webengine libgl1-mesa-dev
+
+            QT_BASE_DIR=/opt/qt515
+            export QTDIR=$QT_BASE_DIR
+            export PATH=$QT_BASE_DIR/bin:$PATH
+            export LD_LIBRARY_PATH=$QT_BASE_DIR/lib/$SNAPCRAFT_ARCH_TRIPLET:$QT_BASE_DIR/lib:${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+            export PKG_CONFIG_PATH=$QT_BASE_DIR/lib/pkgconfig:${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+
+            PQMAKE=$(which qmake);
+
+            echo "Using" $PQMAKE;
+
+            echo $(${PQMAKE} --version)
+
+            qmake PREFIX=${SNAPCRAFT_PART_INSTALL}/usr src
+
+            make -j4
+
+            make install
+            
+            # todo: move this to qt install section
             mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/
             cp -rf ${SNAPCRAFT_PART_SRC}/colorpie.desktop ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/colorpie.desktop
+            
+            
+  desktop-launch:
+     plugin: nil
+     source: https://github.com/keshavbhatt/qt515-core20.git
+     after: [build-src]
+     override-build: |
+            snapcraftctl build
+            
+            mkdir -p ${SNAPCRAFT_PART_INSTALL}/bin/
+            
+            cp -rf ${SNAPCRAFT_PART_SRC}/snap_launcher/bin/desktop-launch ${SNAPCRAFT_PART_INSTALL}/bin/
